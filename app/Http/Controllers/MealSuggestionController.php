@@ -49,7 +49,11 @@ class MealSuggestionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $mealSuggestion = MealSuggestion::with('user')->findOrFail($id);
+
+        return Inertia::render('MealSuggestions/Show', [
+            'mealSuggestion' => $mealSuggestion
+        ]);
     }
 
     /**
@@ -57,7 +61,11 @@ class MealSuggestionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $mealSuggestion = MealSuggestion::with('user')->findOrFail($id);
+        
+        return Inertia::render('MealSuggestions/Edit', [
+            'mealSuggestion' => $mealSuggestion
+        ]);
     }
 
     /**
@@ -65,7 +73,17 @@ class MealSuggestionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string', 
+            'week_number' => 'required|numeric|min:1|max:52',
+        ]);
+
+        $mealSuggestion = MealSuggestion::findOrFail($id);
+
+        $mealSuggestion->update($validated);
+
+        return redirect()->route('meal-suggestions.show', $mealSuggestion);
     }
 
     /**
@@ -73,6 +91,10 @@ class MealSuggestionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $mealSuggestion = MealSuggestion::findOrFail($id);
+
+        $mealSuggestion->delete();
+
+        return redirect()->route('meal-suggestions.index');
     }
 }
