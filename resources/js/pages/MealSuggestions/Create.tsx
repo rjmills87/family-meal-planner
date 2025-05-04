@@ -36,7 +36,9 @@ export default function Create() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
-                <Button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">Add New Suggestion</Button>
+                <Button className="cursor-pointer bg-blue-500 transition-colors duration-300 ease-in-out hover:bg-blue-700">
+                    Add New Suggestion
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={submit}>
@@ -68,7 +70,7 @@ export default function Create() {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button type="submit" className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600" disabled={processing}>
+                        <Button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600" disabled={processing}>
                             {processing ? 'Creating...' : 'Create Suggestion'}
                         </Button>
                     </DialogFooter>
