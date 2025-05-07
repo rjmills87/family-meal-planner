@@ -2,19 +2,19 @@ Meal Planning App MVP - To-Do List
 
 Phase 1: Core Collaborative Meal Planning (Focus: Reducing Disagreement)
 Milestone 1: User Accounts
-[ ] Implement basic user registration for each family member.
-[ ] Implement user login.
-[ ] Create simple user profiles (name/identifier).
-[ ] Technical: Implement Laravel authentication.
-[ ] Technical: Create users table in the database.
-[ ] Technical: Build basic Inertia.js forms.
+[X] Implement basic user registration for each family member.
+[X] Implement user login.
+[X] Create simple user profiles (name/identifier).
+[X] Technical: Implement Laravel authentication.
+[X] Technical: Create users table in the database.
+[X] Technical: Build basic Inertia.js forms.
 
 Milestone 2: Meal Suggestion Submission
-[ ] Create a section for users to suggest meal ideas (text input).
-[ ] Store meal suggestions in the database, associated with user and week.
-[ ] Technical: Create Laravel models (meals/suggestions table).
-[ ] Technical: Set up database relationships (user-meal).
-[ ] Technical: Build Inertia.js forms and data handling.
+[X] Create a section for users to suggest meal ideas (text input).
+[X] Store meal suggestions in the database, associated with user and week.
+[X] Technical: Create Laravel models (meals/suggestions table).
+[X] Technical: Set up database relationships (user-meal).
+[X] Technical: Build Inertia.js forms and data handling.
 
 Milestone 3: Voting System
 [ ] Display submitted meal suggestions to logged-in users.
