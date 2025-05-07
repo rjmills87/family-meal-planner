@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Enums\Role;
 use App\Models\MealSuggestion;
+use App\Models\Vote;
 
 class User extends Authenticatable
 {
@@ -55,4 +56,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(MealSuggestion::class);
     }
+
+
+    public function votes(): HasMany 
+    {
+        return $this->hasMany(Vote::class);
+    }
+
 }
