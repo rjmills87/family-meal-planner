@@ -1,3 +1,4 @@
+import VoteButton from '@/components/VoteButton';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
@@ -9,6 +10,7 @@ type MealSuggestion = {
     title: string;
     description: string | null;
     week_number: number;
+    vote_count: number;
     user: {
         id: number;
         name: string;
@@ -73,6 +75,9 @@ export default function Index({ mealSuggestions }: Props) {
                                                     >
                                                         View
                                                     </Link>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <VoteButton mealSuggestionId={suggestion.id} initialVoteCount={suggestion.vote_count || 0} />
                                                 </td>
                                             </tr>
                                         ))}

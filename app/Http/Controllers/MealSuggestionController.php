@@ -13,10 +13,16 @@ class MealSuggestionController extends Controller
      */
     public function index()
     {
-        $mealSuggestions = MealSuggestion::with('user')->latest()->get();
-        return Inertia::render('MealSuggestions/Index', [
-            'mealSuggestions' => $mealSuggestions
-        ]);
+        $mealSuggestions = MealSuggestion::with('user')
+        ->withCount(['votes as vote_count' => function($query) {
+            $query->select(\DB::raw('SUM(value)'));
+        }])
+        ->latest()
+        ->get();
+        
+    return Inertia::render('MealSuggestions/Index', [
+        'mealSuggestions' => $mealSuggestions
+    ]);
     }
 
     /**
@@ -49,11 +55,15 @@ class MealSuggestionController extends Controller
      */
     public function show(string $id)
     {
-        $mealSuggestion = MealSuggestion::with('user')->findOrFail($id);
+        $mealSuggestion = MealSuggestion::with('user')
+        ->withCount(['votes as vote_count' => function($query) {
+            $query->select(\DB::raw('SUM(value)'));
+        }])
+        ->findOrFail($id);
 
-        return Inertia::render('MealSuggestions/Show', [
-            'mealSuggestion' => $mealSuggestion
-        ]);
+    return Inertia::render('MealSuggestions/Show', [
+        'mealSuggestion' => $mealSuggestion
+    ]);
     }
 
     /**

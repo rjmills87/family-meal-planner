@@ -41,11 +41,19 @@ class VoteController extends Controller
 
         $voteCount = Vote::where('meal_suggestion_id', $validated['meal_suggestion_id'])->sum('value');
 
-        return response()->json([
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'vote' => $vote,
+                'vote_count' => $voteCount
+            ]);
+        }
+    
+        return back()->with([
             'success' => true,
-            'vote' => $vote,
-            'vote_count' => $voteCount
+            'message' => 'Vote recorded successfully'
         ]);
+    
     }
 
     /**
