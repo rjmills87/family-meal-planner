@@ -17,11 +17,11 @@ Milestone 2: Meal Suggestion Submission
 [X] Technical: Build Inertia.js forms and data handling.
 
 Milestone 3: Voting System
-[ ] Display submitted meal suggestions to logged-in users.
-[ ] Implement a voting mechanism (e.g., "like" button).
-[ ] Store votes in the database, associated with user and meal suggestion.
-[ ] Technical: Create votes table in the database.
-[ ] Technical: Implement Inertia.js UI updates for voting.
+[X] Display submitted meal suggestions to logged-in users.
+[X] Implement a voting mechanism (e.g., "like" button).
+[X] Store votes in the database, associated with user and meal suggestion.
+[X] Technical: Create votes table in the database.
+[X] Technical: Implement Inertia.js UI updates for voting.
 
 Milestone 4: Basic Meal Plan Generation & Display
 [ ] Implement logic to generate a tentative meal plan based on votes.
