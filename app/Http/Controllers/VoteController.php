@@ -77,6 +77,21 @@ class VoteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $vote = Vote::findOrFail($id);
+
+        if ($vote->user_id !== auth()->id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $mealSuggestionId = $vote->meal_suggestion_id;
+
+        $vote->delete();
+
+        $voteCount = Vote::where('meal_suggestion_id', $mealSuggestionId)->sum('value');
+
+        return response()->json([
+            'success' => true,
+            'vote_count' => $voteCount
+        ]);
     }
 }
