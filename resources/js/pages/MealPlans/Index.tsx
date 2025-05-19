@@ -1,6 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
+import Create from './Create';
 
 // Define the type for a meal plan
 type MealPlan = {
@@ -64,12 +65,7 @@ export default function Index({ mealPlans }: Props) {
                         <div className="border-b border-gray-200 bg-white p-6">
                             <div className="mb-6 flex items-center justify-between">
                                 <h2 className="text-2xl font-bold">Meal Plans</h2>
-                                <Link
-                                    href={route('meal-plans.create')}
-                                    className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-                                >
-                                    Create Meal Plan
-                                </Link>
+                                <Create />
                             </div>
 
                             {mealPlans.data.length === 0 ? (
