@@ -16,7 +16,6 @@ type MealPlan = {
     };
 };
 
-// Define the props for our component
 type Props = {
     mealPlans: {
         data: MealPlan[];
@@ -105,9 +104,6 @@ export default function Index({ mealPlans }: Props) {
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <Link href={route('meal-plans.show', plan.id)} className="mr-2 text-blue-600 hover:text-blue-900">
                                                         View
-                                                    </Link>
-                                                    <Link href={route('meal-plans.edit', plan.id)} className="mr-2 text-blue-600 hover:text-blue-900">
-                                                        Edit
                                                     </Link>
                                                 </td>
                                             </tr>

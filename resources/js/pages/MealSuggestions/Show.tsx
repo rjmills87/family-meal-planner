@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import VoteButton from '@/components/VoteButton';
+import VoteButton from '@/components/vote-button';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';

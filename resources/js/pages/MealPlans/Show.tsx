@@ -1,3 +1,4 @@
+import CalendarView from '@/components/calendar-view';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
@@ -104,9 +105,20 @@ export default function Show({ mealPlan }: Props) {
                             >
                                 {mealPlan.status}
                             </div>
-
                             <div className="mt-6">
                                 <h3 className="mb-4 text-lg font-medium">Weekly Meal Schedule</h3>
+
+                                {/* Calendar View */}
+                                <div className="mb-8 overflow-hidden rounded-lg border border-gray-200 bg-gray-50 p-4">
+                                    {sortedItems.length === 0 ? (
+                                        <p className="p-4 text-gray-500">No meals have been added to this plan yet.</p>
+                                    ) : (
+                                        <CalendarView items={sortedItems} />
+                                    )}
+                                </div>
+
+                                {/* List View */}
+                                <h4 className="text-md mb-4 font-medium">Meal List</h4>
                                 <div className="overflow-hidden rounded-lg border border-gray-200">
                                     {sortedItems.length === 0 ? (
                                         <p className="p-4 text-gray-500">No meals have been added to this plan yet.</p>

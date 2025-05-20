@@ -24,10 +24,10 @@ Milestone 3: Voting System
 [X] Technical: Implement Inertia.js UI updates for voting.
 
 Milestone 4: Basic Meal Plan Generation & Display
-[ ] Implement logic to generate a tentative meal plan based on votes.
-[ ] Display the generated meal plan in a weekly calendar view.
-[ ] Technical: Implement Laravel backend logic for plan generation.
-[ ] Technical: Build Inertia.js UI to display the meal plan.
+[X] Implement logic to generate a tentative meal plan based on votes.
+[X] Display the generated meal plan in a weekly calendar view.
+[X] Technical: Implement Laravel backend logic for plan generation.
+[X] Technical: Build Inertia.js UI to display the meal plan.
 
 Phase 2: MVP Refinement & Basic Enhancements
 [ ] Review and refine core features based on initial family use.
