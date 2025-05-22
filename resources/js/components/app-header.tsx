@@ -21,6 +21,16 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    {
+        title: 'Meal Suggestions',
+        href: '/meal-suggestions',
+        icon: BookOpen,
+    },
+    {
+        title: 'Meal Plans',
+        href: '/meal-plans',
+        icon: Folder,
+    },
 ];
 
 const rightNavItems: NavItem[] = [
