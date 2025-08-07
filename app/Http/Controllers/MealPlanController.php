@@ -138,8 +138,7 @@ class MealPlanController extends Controller
     {
         $mealPlan->delete();
         
-        return redirect()->route('meal-plans.index')
-            ->with('success', 'Meal plan deleted successfully.');
+        return redirect()->route('meal-plans.index');
     }
 
     /**

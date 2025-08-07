@@ -1,8 +1,11 @@
 import CalendarView from '@/components/calendar-view';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import Edit from './Edit';
 
 // Define the types for our component
@@ -39,8 +42,6 @@ type Props = {
 const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 export default function Show({ mealPlan }: Props) {
-    const [isDeleting, setIsDeleting] = useState(false);
-
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Dashboard',
@@ -59,14 +60,21 @@ export default function Show({ mealPlan }: Props) {
     // Sort items by day of week
     const sortedItems = [...mealPlan.items].sort((a, b) => a.day_of_week - b.day_of_week);
 
+    const { delete: destroy } = useForm();
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+
+    const deleteSuggestion = () => {
+        setDeleteDialogOpen(true);
+    };
+
     // Handle meal plan deletion
-    const handleDelete = () => {
-        if (confirm('Are you sure you want to delete this meal plan?')) {
-            setIsDeleting(true);
-            router.delete(route('meal-plans.destroy', mealPlan.id), {
-                onFinish: () => setIsDeleting(false),
-            });
-        }
+    const confirmDelete = () => {
+        destroy(route('meal-plans.destroy', mealPlan.id), {
+            onSuccess: () => {
+                toast('Your Meal Plan has successfully been deleted.');
+                setDeleteDialogOpen(false);
+            },
+        });
     };
 
     return (
@@ -86,13 +94,13 @@ export default function Show({ mealPlan }: Props) {
                                 </div>
                                 <div className="flex space-x-2">
                                     <Edit mealPlan={mealPlan} />
-                                    <button
-                                        onClick={handleDelete}
-                                        disabled={isDeleting}
-                                        className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
+                                    <Button
+                                        variant="destructive"
+                                        className="cursor-pointer bg-red-500 transition-colors duration-300 ease-in-out hover:bg-red-700"
+                                        onClick={deleteSuggestion}
                                     >
-                                        {isDeleting ? 'Deleting...' : 'Delete Meal Plan'}
-                                    </button>
+                                        Delete Suggestion
+                                    </Button>
                                 </div>
                             </div>
 
@@ -151,6 +159,23 @@ export default function Show({ mealPlan }: Props) {
                     </div>
                 </div>
             </div>
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Delete Meal Plan</DialogTitle>
+                        <DialogDescription>Are you sure you want to delete this Meal Plan? This action cannot be undone.</DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button variant="destructive" onClick={confirmDelete}>
+                            Delete
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </AppLayout>
     );
 }

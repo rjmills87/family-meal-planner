@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 type MealSuggestion = {
     id: number;
@@ -31,6 +32,7 @@ export default function Edit({ mealSuggestion }: Props) {
                 setOpen(false);
             },
         });
+        toast('Your edits have been saved successfully.');
     };
 
     const [open, setOpen] = useState(false);

@@ -72,6 +72,8 @@ class MealSuggestionController extends Controller
     public function edit(string $id)
     {
         $mealSuggestion = MealSuggestion::with('user')->findOrFail($id);
+
+        $this->authorize('edit', $mealSuggestion);
         
         return Inertia::render('MealSuggestions/Edit', [
             'mealSuggestion' => $mealSuggestion
@@ -91,6 +93,8 @@ class MealSuggestionController extends Controller
 
         $mealSuggestion = MealSuggestion::findOrFail($id);
 
+        $this->authorize('update', $mealSuggestion);
+
         $mealSuggestion->update($validated);
 
         return redirect()->route('meal-suggestions.show', $mealSuggestion);
@@ -102,6 +106,8 @@ class MealSuggestionController extends Controller
     public function destroy(string $id)
     {
         $mealSuggestion = MealSuggestion::findOrFail($id);
+
+        $this->authorize('delete', $mealSuggestion);
 
         $mealSuggestion->delete();
 

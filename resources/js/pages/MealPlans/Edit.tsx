@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 type MealSuggestion = {
     id: number;
@@ -98,6 +99,7 @@ export default function Edit({ mealPlan }: Props) {
                 setOpen(false);
             },
         });
+        toast('Your edits have been saved successfully.');
     };
     const [open, setOpen] = useState(false);
 

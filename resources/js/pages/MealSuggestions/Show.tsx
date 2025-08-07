@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import VoteButton from '@/components/vote-button';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 import Edit from './Edit';
 
 // Define the type for a meal suggestion
@@ -26,6 +29,9 @@ type Props = {
 };
 
 export default function Show({ mealSuggestion }: Props) {
+    const { auth } = usePage<{ auth: { user: { id: number } } }>().props;
+    const isOwner = auth.user.id === mealSuggestion.user.id;
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Dashboard',
@@ -42,11 +48,19 @@ export default function Show({ mealSuggestion }: Props) {
     ];
 
     const { delete: destroy } = useForm();
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
     const deleteSuggestion = () => {
-        if (confirm('Are you sure you want to delete this meal suggestion?')) {
-            destroy(route('meal-suggestions.destroy', mealSuggestion.id));
-        }
+        setDeleteDialogOpen(true);
+    };
+
+    const confirmDelete = () => {
+        destroy(route('meal-suggestions.destroy', mealSuggestion.id), {
+            onSuccess: () => {
+                toast('Your Meal Suggestion has successfully been deleted.');
+                setDeleteDialogOpen(false);
+            },
+        });
     };
 
     return (
@@ -59,14 +73,18 @@ export default function Show({ mealSuggestion }: Props) {
                     <p className="text-lg">{mealSuggestion.description}</p>
                     <p>Suggested by: {mealSuggestion.user.name}</p>
                     <div className="flex items-center gap-4">
-                        <Edit mealSuggestion={mealSuggestion} />
-                        <Button
-                            variant="destructive"
-                            className="cursor-pointer bg-red-500 transition-colors duration-300 ease-in-out hover:bg-red-700"
-                            onClick={deleteSuggestion}
-                        >
-                            Delete Suggestion
-                        </Button>
+                        {isOwner && (
+                            <>
+                                <Edit mealSuggestion={mealSuggestion} />
+                                <Button
+                                    variant="destructive"
+                                    className="cursor-pointer bg-red-500 transition-colors duration-300 ease-in-out hover:bg-red-700"
+                                    onClick={deleteSuggestion}
+                                >
+                                    Delete Suggestion
+                                </Button>
+                            </>
+                        )}
                     </div>
                     <div>
                         <Link href="/meal-suggestions">
@@ -80,6 +98,23 @@ export default function Show({ mealSuggestion }: Props) {
                     </div>
                 </div>
             </div>
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Delete Meal Suggestion</DialogTitle>
+                        <DialogDescription>Are you sure you want to delete this meal suggestion? This action cannot be undone.</DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button variant="destructive" onClick={confirmDelete}>
+                            Delete
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </AppLayout>
     );
 }

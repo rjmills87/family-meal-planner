@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 function getCurrentWeek(): number {
     const now = new Date();
@@ -27,6 +28,7 @@ export default function Create() {
             onSuccess: () => {
                 reset();
                 setOpen(false);
+                toast('Your suggestion has been created successfully.');
             },
         });
     };

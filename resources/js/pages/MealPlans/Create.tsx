@@ -3,7 +3,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 // Helper function to get the current week number
 function getWeekNumber(date: Date): number {
@@ -23,9 +24,14 @@ export default function Create() {
         year: currentYear,
     });
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('meal-plans.store'));
+        post(route('meal-plans.store'), {
+            onSuccess: () => {
+                setOpen(false);
+                toast('Your Meal Plan has been created successfully.');
+            },
+        });
     };
 
     const [open, setOpen] = useState(false);
@@ -39,7 +45,7 @@ export default function Create() {
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
                         <DialogTitle>Create a Meal Plan</DialogTitle>
-                        <DialogDescription>Creat a meal plan for week {data.week_number}</DialogDescription>
+                        <DialogDescription>Create a meal plan for week {data.week_number}</DialogDescription>
                     </DialogHeader>
                     <div className="py-4">
                         <div className="mb-4">
